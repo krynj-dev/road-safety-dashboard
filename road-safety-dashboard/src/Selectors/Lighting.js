@@ -11,11 +11,10 @@ class Lighting extends React.Component {
     render() {
         return(
             <Form>
+                <Form.Label>Lighting</Form.Label>
                 <Form.Select onChange={(event) => {this.updateTarget(event)}}>
                     <option>All</option>
-                    <option>Daylight</option>
-                    <option>Darkness</option>
-                    <option>Dawn/Dusk</option>
+                    {this.generateLightingList()}
                 </Form.Select>
             </Form>
         );
@@ -29,6 +28,17 @@ class Lighting extends React.Component {
         else {
             this.props.changeFunc({lighting: null});
         }
+    }
+
+    generateLightingList() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "http://localhost:5000/api/get-lightings", false);
+        xhttp.send( null );
+        var resJson = JSON.parse(xhttp.responseText);
+        resJson["lightings"].sort();
+        return(resJson["lightings"].map(function(d, idx) {
+            return(<option key={idx}>{d}</option>);
+        } ));
     }
 }
 

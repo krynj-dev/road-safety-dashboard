@@ -11,10 +11,10 @@ class Suburb extends React.Component {
     render() {
         return(
             <Form>
+                <Form.Label>Suburb</Form.Label>
                 <Form.Select onChange={(event) => {this.updateTarget(event)}}>
                     <option>All</option>
-                    {// Find way to get suburbs from api then map
-                    }
+                    {this.generateSuburbList()}
                 </Form.Select>
             </Form>
         );
@@ -28,6 +28,17 @@ class Suburb extends React.Component {
         else {
             this.props.changeFunc({suburb: null});
         }
+    }
+
+    generateSuburbList() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "http://localhost:5000/api/get-suburbs", false);
+        xhttp.send( null );
+        var resJson = JSON.parse(xhttp.responseText);
+        resJson["suburbs"].sort();
+        return(resJson["suburbs"].map(function(d, idx) {
+            return(<option key={idx}>{d}</option>);
+        } ));
     }
 }
 

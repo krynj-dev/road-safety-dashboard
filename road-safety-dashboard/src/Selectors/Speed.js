@@ -11,14 +11,15 @@ class Speed extends React.Component {
     render() {
         return(
             <Form>
+                <Form.Label>Speed Limit
+                </Form.Label>
                 <Form.Select onChange={(event) => {this.updateTarget(event)}}>
                     <option>All</option>
-                    <option>50</option>
+                    <option>0 - 50</option>
                     <option>60</option>
                     <option>70</option>
-                    <option>80</option>
-                    <option>90</option>
-                    <option>100</option>
+                    <option>80 - 90</option>
+                    <option>100 - 110</option>
                 </Form.Select>
             </Form>
         );

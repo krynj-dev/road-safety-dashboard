@@ -25,7 +25,8 @@ class App extends React.Component{
       suburb: null,
       speed: null,
       weather: null,
-      lighting: null
+      lighting: null,
+      original: this.getData(null, null, null, null, null, null),
     }
     this.handleTheChange = this.handleTheChange.bind(this);
   }
@@ -46,7 +47,7 @@ class App extends React.Component{
     return (
       <div className="App">
         <header className="App-header">
-          <h1>QLD Road Safety Dashboard</h1>
+          <h1>What Makes an Accident?</h1>
         </header>
         <Container className="Dashboard">
           <Row>
@@ -57,10 +58,28 @@ class App extends React.Component{
             <Col><Weather changeFunc={this.handleTheChange}/></Col>
             <Col><Lighting changeFunc={this.handleTheChange}/></Col>
           </Row>
-          <Row><Displayer month={month} day={day} suburb={suburb} speed={speed} weather={weather} lighting={lighting}/></Row>
+          <Row>
+            <Col><Displayer data={this.getData(month, day, suburb, speed, weather, lighting)} original={this.state.original}/></Col>
+          </Row>
         </Container>
       </div>
     );
+  }
+
+  getData(m, d, sb, sp, w, l) {
+    var params = {month: m, day: d, suburb: sb, speed: sp, weather: w, lighting: l};
+    var xhttp = new XMLHttpRequest();
+    var qs = Object.keys(params).map(key => key + '=' + this.nullToBlank(params[key])).join('&');
+    xhttp.open("GET", "http://localhost:5000/api/get-distribution?"+qs, false);
+    xhttp.send( null );
+    return(xhttp.responseText);
+  }
+
+  nullToBlank(str) {
+      if (str == null) {
+          return "";
+      }
+      return str;
   }
 }
 

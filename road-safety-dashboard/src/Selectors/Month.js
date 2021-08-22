@@ -11,6 +11,7 @@ class Month extends React.Component {
     render() {
         return(
             <Form>
+                <Form.Label>Month</Form.Label>
                 <Form.Select onChange={(event) => {this.updateTarget(event)}}>
                     <option>All</option>
                     <option>January</option>

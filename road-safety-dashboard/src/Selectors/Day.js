@@ -11,6 +11,7 @@ class Day extends React.Component {
     render() {
         return(
             <Form>
+                <Form.Label>Day</Form.Label>
                 <Form.Select onChange={(event) => {this.updateTarget(event)}}>
                     <option>All</option>
                     <option>Monday</option>

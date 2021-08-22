@@ -11,10 +11,10 @@ class Weather extends React.Component {
     render() {
         return(
             <Form>
+                <Form.Label>Weather</Form.Label>
                 <Form.Select onChange={(event) => {this.updateTarget(event)}}>
                     <option>All</option>
-                    <option>Clear</option>
-                    <option>Raining</option>
+                    {this.generateWeatherList()}
                 </Form.Select>
             </Form>
         );
@@ -28,6 +28,17 @@ class Weather extends React.Component {
         else {
             this.props.changeFunc({weather: null});
         }
+    }
+
+    generateWeatherList() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", "http://localhost:5000/api/get-weathers", false);
+        xhttp.send( null );
+        var resJson = JSON.parse(xhttp.responseText);
+        resJson["weathers"].sort();
+        return(resJson["weathers"].map(function(d, idx) {
+            return(<option key={idx}>{d}</option>);
+        } ));
     }
 }
 
